@@ -1,0 +1,76 @@
+<% layout('layouts/boilerplate')%>
+<div class="row">
+    <h1 class="text-center">Edit Campground</h1>
+    <div class="col-6 offset-3">
+        <form action="/campgrounds/<%=camp._id%>?_method=PUT" method="POST" novalidate class="validated-form" enctype="multipart/form-data">
+            <div class="mb-3">
+                <label class="form-label" for="location">Location</label>
+                <input class="form-control" type="text" id="location" name="Location"
+                    value="<%=camp.Location %>" required>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="image">Add Images</label>
+                <input class="form-control" type="file" id="image" name="image" multiple>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="price">Campground Price</label>
+                <div class="input-group">
+                    <span class="input-group-text" id="price-label">$</span>
+                    <input type="text" class="form-control" id="price" placeholder="0.00" aria-label="price"
+                        aria-describedby="price-label" name="price" value="<%=camp.price %>"
+                        required>\<div class="valid-feedback">
+                        Looks good!
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label" for="description">Description</label>
+                <textarea class="form-control" type="text" id="description" name="Discription"
+                    required><%= camp.Discription%></textarea>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+            <div class="mb-3">
+                <h3>Old camp tittle: <%= camp.tittle %></h3>
+            </div>
+            <div class="mb-3">
+                <label class="form-lable" for="place">select new tittle</label>
+                <select class="form-control" name="place" id="place">
+                    <option value=" ">Select</option>
+                    <% for(let pl of places) {%>
+                        <option value="<%= pl %>"><%= pl %></option>
+                    <% } %>    
+                </select>
+            </div>
+            <div class="mb-3">
+                <label class="form-lable" for="dis">select new tittle</label>
+                <select class="form-control" name="discription" id="dis">
+                    <option value=" ">Select</option>
+                    <% for(let dis of descriptors) {%>
+                        <option value="<%= dis %>"><%= dis %></option>
+                    <% } %>    
+                </select>
+            </div>
+            <div class="mb-3">
+                <% camp.images.forEach(function(img,i){ %>
+                    <img src="<%= img.thumbnail %>" class="img-thumbnail" alt="">
+                    <label for="image-<%=i%>">Delete?</label>
+                    <input type="checkbox" id="image-<%=i%>" name="deleteImages[]" value="<%= img.filename %>">
+                <% }) %>
+            </div>
+            <div class="mb-3">
+                <button class="btn btn-info">Update Campground</button>
+            </div>
+        </form>
+        <a href="/campgrounds/<%= camp._id%>">Back To Campground</a>
+
+    </div>
+</div>

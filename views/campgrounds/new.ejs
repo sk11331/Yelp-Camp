@@ -1,0 +1,59 @@
+<% layout('layouts/boilerplate') %>
+<div class="row">
+    <h1 class="text-center">Add Campground</h1>
+    <div class="col-6 offset-3">
+        <form action="/campgrounds" method="post" novalidate class="validate-form" enctype="multipart/form-data">
+            <div class="mb-3">
+                <label class="form-lable" for="city">Enter city and state name</label>
+                <input class="form-control" type="text" name="Location" id="city" placeholder="Enter city" required>
+                <div class="valid-feedback">
+                    Looks Good!
+                </div>
+            </div>
+            <div class="mb-3">
+                <label class="form-lable" for="img">Upload images</label>
+                <input class="form-control" type="file" name="image" id="img" multiple>
+            </div>
+            <div class="mb-3">
+                <label class="form-lable" for="dis">Write about the campground</label>
+                <textarea class="form-control" name="Discription" id="dis" placeholder="Discription" required></textarea>
+                <div class="valid-feedback">
+                    Looks Good!
+                </div>
+            </div>
+            <div class="mb-3">
+                <label class="form-lable" for="price">Price</label>
+                <div class="input-group mb-3">
+                    <span class="input-group-text">₹</span>
+                    <input type="text" name="price" class="form-control" id="price" placeholder="00" aria-label="Amount (to the nearest dollar)" required>
+                    <span class="input-group-text">.00</span>
+                    <div class="valid-feedback">
+                        Looks Good!
+                    </div>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label class="form-lable" for="place">Select the place</label>
+                <select class="form-control" name="place" id="place" required>
+                    <option value=" ">Select</option>
+                    <% for(let pl of places) {%>
+                        <option value="<%= pl %>"><%= pl %></option>
+                    <% } %>    
+                </select>
+            </div>
+            <div class="mb-3">
+                <label class="form-lable" for="dis">Select the place</label>
+                <select class="form-control" name="discription" id="dis">
+                    <option value=" ">Select</option>
+                    <% for(let dis of descriptors) {%>
+                        <option value="<%= dis %>"><%= dis %></option>
+                    <% } %>    
+                </select>
+            </div>
+            <div class="mb-">
+                <button class="btn btn-success">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>
+
