@@ -68,6 +68,10 @@ app.use('/campgrounds', campgrounds)
 app.use('/campgrounds/:id/review', reviews)
 app.use('/',users)
 
+app.get('/home',(req,res)=>{
+    res.render('Home')
+})
+
 app.all('*',(req,res,next)=>{
     next(new errorClass('Route does not exist',401))
 })

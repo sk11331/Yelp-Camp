@@ -31,13 +31,13 @@ module.exports.renderLogin = (req,res)=>{
 
 module.exports.userLogin = (req,res)=>{
     req.flash('success','Welcome to campgrounds')
-    res.redirect('/campgrounds')
+    res.redirect('/home')
 }
 
 module.exports.logoutUser = (req,res)=>{
     req.logout(function(err){
         if(err) {return err}
         req.flash('success','Logged Out')
-        res.redirect('/campgrounds')
+        res.redirect('/home')
     });
 }
