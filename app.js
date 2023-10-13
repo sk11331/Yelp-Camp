@@ -1,8 +1,8 @@
-if(process.env.NONE_ENV !== "production")
-{
-    require('dotenv').config()
-}
-
+// if(process.env.NONE_ENV !== "production")
+// {
+    
+// }
+require('dotenv').config()
 const express = require('express')
 const app = express()
 const mongoose = require('mongoose')
@@ -18,8 +18,10 @@ const passport = require('passport')
 const LocalStatergy = require('passport-local')
 const usermodel = require('./models/user')
 const errorClass = require('./Utils/ExpressErrorClass')
+const mongoSanitize = require('express-mongo-sanitize')
 
 mongoose.connect('mongodb://127.0.0.1:27017/yelp-camp')
+mongoose.set('strictQuery', true)
 
 const db = mongoose.connection
 
@@ -35,17 +37,24 @@ app.use(express.urlencoded({extended:true}))
 app.use(express.json())
 app.use(methodOverride('_method'))
 app.use(express.static(path.join(__dirname,'public')))
-
+app.use(mongoSanitize())
 
 const sessionConfig = {
+    name:'session',
     secret: 'thisismysecret',
     resave: false,
     saveUninitialized: true,
     cookie:{
+        httpOnly:true,
+        //secure:true,
         expires: Date.now() * 1000 * 60 * 60 * 24 * 7,
         maxAge: 1000 * 60 * 5 
     }
 }
+
+app.use(mongoSanitize({
+    replaceWith:'_'
+}))
 
 app.use(session(sessionConfig))
 app.use(flash())
@@ -58,6 +67,7 @@ passport.serializeUser(usermodel.serializeUser())
 passport.deserializeUser(usermodel.deserializeUser())
 
 app.use((req,res,next)=>{
+    //console.log(req.query)
     res.locals.currentUser = req.user
     res.locals.success = req.flash('success')
     res.locals.Error = req.flash('Error')
